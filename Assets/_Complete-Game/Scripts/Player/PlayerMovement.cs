@@ -61,7 +61,6 @@ namespace CompleteProject
 
         void Turning ()
         {
-#if !MOBILE_INPUT
             // Create a ray from the mouse cursor on screen in the direction of the camera.
             Ray camRay = Camera.main.ScreenPointToRay (Input.mousePosition);
 
@@ -83,25 +82,6 @@ namespace CompleteProject
                 // Set the player's rotation to this new rotation.
                 playerRigidbody.MoveRotation (newRotatation);
             }
-#else
-
-            Vector3 turnDir = new Vector3(CrossPlatformInputManager.GetAxisRaw("Mouse X") , 0f , CrossPlatformInputManager.GetAxisRaw("Mouse Y"));
-
-            if (turnDir != Vector3.zero)
-            {
-                // Create a vector from the player to the point on the floor the raycast from the mouse hit.
-                Vector3 playerToMouse = (transform.position + turnDir) - transform.position;
-
-                // Ensure the vector is entirely along the floor plane.
-                playerToMouse.y = 0f;
-
-                // Create a quaternion (rotation) based on looking down the vector from the player to the mouse.
-                Quaternion newRotatation = Quaternion.LookRotation(playerToMouse);
-
-                // Set the player's rotation to this new rotation.
-                playerRigidbody.MoveRotation(newRotatation);
-            }
-#endif
         }
 
 
